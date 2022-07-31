@@ -7,7 +7,7 @@ export default {
       const users = await prisma.user.findMany();
       return res.json(users);
     } catch (error) {
-      return res.json({ error: "Não foi possível fazer a consulta!" });
+      return res.status(400).json({ message: error.message });
     }
   },
 
@@ -23,9 +23,7 @@ export default {
       }
       return res.status(200).json(user);
     } catch (error) {
-      return res
-        .status(400)
-        .json({ error: "Não foi possível fazer a consulta!" });
+      return res.status(400).json({ message: error.message });
     }
   },
 
@@ -45,7 +43,7 @@ export default {
       });
       res.status(201).json(user);
     } catch (error) {
-      res.status(400).json({ error });
+      return res.status(400).json({ message: error.message });
     }
   },
 
@@ -69,9 +67,7 @@ export default {
 
       return res.status(200).json("Usuário atualizado com sucesso!");
     } catch (error) {
-      return res
-        .status(400)
-        .json({ error: "Não foi possível alterar o usuário!" });
+      return res.status(400).json({ message: error.message });
     }
   },
 
@@ -82,14 +78,14 @@ export default {
 
       if (!user)
         return res
-          .status(400)
+          .status(404)
           .json({ error: "Não possivel encotrar esse usuario" });
 
       await prisma.user.delete({ where: { id: Number(id) } });
 
       return res.status(200).json({ message: "Usuario deletado" });
     } catch (error) {
-      return res.status(400).json({ error });
+      return res.status(400).json({ message: error.message });
     }
   },
-};
+}
