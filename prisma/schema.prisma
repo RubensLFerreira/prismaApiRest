@@ -19,8 +19,8 @@ model User {
 }
 
 model Post {
-  id       Int    @id @default(autoincrement())
-  content  String
-  userId Int
-  author   User   @relation(fields: [userId], references: [id])
+  id      Int    @id @default(autoincrement())
+  content String
+  userId  Int
+  author  User   @relation(fields: [userId], references: [id])
 }
